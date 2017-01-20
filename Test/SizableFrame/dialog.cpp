@@ -1,6 +1,8 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 
+#include <QDebug>
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -57,6 +59,7 @@ void Dialog::mouseMoveEvent(QMouseEvent *event)
     QRect rect = this->rect();
     QPoint tl = mapToGlobal(rect.topLeft());
     QPoint rb = mapToGlobal(rect.bottomRight());
+    qDebug() << rect << tl << rb;
 
     if(!isLeftPressDown) {
         this->region(gloPoint);
@@ -111,6 +114,7 @@ void Dialog::mouseMoveEvent(QMouseEvent *event)
                 break;
             }
             this->setGeometry(rMove);
+            qDebug() << rMove;
         } else {
             move(event->globalPos() - dragPosition);
             event->accept();

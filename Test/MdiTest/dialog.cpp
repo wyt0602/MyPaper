@@ -11,7 +11,7 @@ Dialog::Dialog(QWidget *parent) :
     this->setMaximumHeight(200);
     this->setMaximumWidth(200);
     this->setWindowFlags(Qt::FramelessWindowHint|Qt::WindowSystemMenuHint );
-    this->setMouseTracking(true);
+    //this->setMouseTracking(true);
 }
 
 Dialog::~Dialog()
@@ -60,6 +60,7 @@ void Dialog::mouseMoveEvent(QMouseEvent *event)
 
     qDebug() << "topLeft:" << tl << ";bottomRight:" << rb;
     qDebug() << "globalPoint: " << gloPoint;
+    qDebug() << "parentPoint: " << mapToParent(gloPoint);
 
     if(!isLeftPressDown) {
         this->region(event->globalPos());

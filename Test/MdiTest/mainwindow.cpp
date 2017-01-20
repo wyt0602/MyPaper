@@ -10,14 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    mdiArea = new QMdiArea(ui->widget);
+    ui->setupUi(this);
+    mdiArea = new QMdiArea;
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     //mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     mdiArea->setBaseSize(800, 800);
     mdiArea->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
-    setCentralWidget(mdiArea);
+//    setCentralWidget(mdiArea);
 //    QMdiSubWindow *child1 = new QMdiSubWindow;
 //    child1->setWidget(new Dialog);
 //    child1->setWindowFlags(Qt::CustomizeWindowHint);
@@ -29,7 +30,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QMdiSubWindow *child1 = new Dialog(mdiArea);
     mdiArea->addSubWindow(child1);
-    ui->setupUi(this);
+    QMdiSubWindow *child2 = new Dialog(mdiArea);
+    mdiArea->addSubWindow(child2);
+    setCentralWidget(mdiArea);
+
 }
 
 MainWindow::~MainWindow()
