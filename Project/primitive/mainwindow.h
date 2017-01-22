@@ -16,8 +16,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *);
+
+
 private:
     Ui::MainWindow *ui;
+    QWidget *main_widget;
     Primitive *my_widget;
 };
 

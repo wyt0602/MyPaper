@@ -9,24 +9,31 @@ Primitive::Primitive(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setStyleSheet("border:1px solid rgb(0, 255, 0);background-color:rgb(0,100,0)");
 
-    this->setMinimumHeight(100);
+    qDebug() << this->parentWidget()->rect().width();
+    qDebug() << this->parentWidget()->width() << this->parentWidget()->height();
+    this->setMinimumHeight(50);
     this->setMinimumWidth(50);
     this->setMaximumHeight(500);
     this->setMaximumWidth(500);
+    move(QPoint(0, 100));
+    this->resize(50, 50);
+
     //this->setMouseTracking(true);
 }
 
 void Primitive::mousePressEvent(QMouseEvent *event)
 {
+    qDebug() << event->pos();
     setBorderCheckParameter(event);
     setRegionInfo(event);
 
     switch (event->button()) {
     case Qt::LeftButton:
+        this->raise();
         is_left_press_down = true;
         if (direction == Inner)
         {
-            relative_position = event->globalPos() - this->geometry().topLeft();
+            drag_relative_position = event->globalPos() - this->geometry().topLeft();
             this->setCursor(QCursor(Qt::ClosedHandCursor));
         }
         break;
@@ -39,6 +46,7 @@ void Primitive::mouseReleaseEvent(QMouseEvent *)
 {
     is_left_press_down = false;
     this->setCursor(Qt::ArrowCursor);
+    this->repaint();
 }
 
 void Primitive::mouseMoveEvent(QMouseEvent *event)
@@ -48,7 +56,7 @@ void Primitive::mouseMoveEvent(QMouseEvent *event)
         QPoint mouse_position = event->globalPos();
         borderCheck(event, mouse_position);
         if (direction == Inner)
-            move(mouse_position - relative_position);
+            move(mouse_position - drag_relative_position);
         else
             adjustShape(mouse_position);
     }
@@ -58,7 +66,16 @@ void Primitive::mouseMoveEvent(QMouseEvent *event)
 
 void Primitive::mouseDoubleClickEvent(QMouseEvent *)
 {
+    this->resize(100, 100);
     //this->close();
+}
+
+void Primitive::paintEvent(QPaintEvent *event)
+{
+    if (is_left_press_down)
+        QMdiSubWindow::paintEvent(event);
+    else
+        this->resize(100, 100);
 }
 
 void Primitive::setRegionInfo(QMouseEvent *event)

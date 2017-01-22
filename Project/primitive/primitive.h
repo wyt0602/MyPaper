@@ -7,6 +7,7 @@
 #include <QMdiSubWindow>
 
 #define PADDING 6
+
 class Primitive : public QMdiSubWindow
 {
     Q_OBJECT
@@ -33,6 +34,8 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *);
 
+    void paintEvent(QPaintEvent *event);
+
 private:
     void setRegionInfo(QMouseEvent *event);
     void adjustShape(QPoint &mouse_position);
@@ -44,10 +47,15 @@ signals:
 public slots:
 
 private:
-    QPoint relative_position;
+    QPoint drag_relative_position;
     bool is_left_press_down;
     RegionDirection direction;
     int top, bottom, left, right;
+
+    QRect parent_info;
+    QPoint position;
+    int h;
+    int w;
 };
 
 #endif // PRIMITIVE_H
