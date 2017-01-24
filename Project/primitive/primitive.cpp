@@ -23,7 +23,7 @@ Primitive::Primitive(QWidget *parent) :
 
 void Primitive::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << event->pos();
+
     setBorderCheckParameter(event);
     setRegionInfo(event);
 
@@ -34,7 +34,7 @@ void Primitive::mousePressEvent(QMouseEvent *event)
         if (direction == Inner)
         {
             drag_relative_position = event->globalPos() - this->geometry().topLeft();
-            this->setCursor(QCursor(Qt::ClosedHandCursor));
+            this->setCursor(Qt::SizeAllCursor);
         }
         break;
     default:
@@ -51,6 +51,7 @@ void Primitive::mouseReleaseEvent(QMouseEvent *)
 
 void Primitive::mouseMoveEvent(QMouseEvent *event)
 {    
+    qDebug() << event->pos();
     if (is_left_press_down)
     {
         QPoint mouse_position = event->globalPos();
@@ -75,7 +76,8 @@ void Primitive::paintEvent(QPaintEvent *event)
     if (is_left_press_down)
         QMdiSubWindow::paintEvent(event);
     else
-        this->resize(100, 100);
+        QMdiSubWindow::paintEvent(event);
+        //this->resize(100, 100);
 }
 
 void Primitive::setRegionInfo(QMouseEvent *event)
