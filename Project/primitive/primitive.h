@@ -5,6 +5,8 @@
 #include <QPoint>
 #include <QRect>
 #include <QMdiSubWindow>
+#include <QSvgRenderer>
+#include <QPainter>
 
 #define PADDING 6
 
@@ -41,6 +43,7 @@ private:
     void adjustShape(QPoint &mouse_position);
     void borderCheck(QMouseEvent *event, QPoint &mouse_position);
     void setBorderCheckParameter(QMouseEvent *event);
+    void clearBorder();
 
 signals:
 
@@ -52,6 +55,7 @@ private:
     RegionDirection direction;
     int top, bottom, left, right;
 
+    QSvgRenderer *svg_render;
     QRect parent_info;
     QPoint position;
     int h;

@@ -16,11 +16,13 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->mdiArea->addSubWindow(child2);
 //    ui->mdiArea->resize(800, 800);
 //    ui->mdiArea->hide();
-    main_widget = new QWidget(this);
+    main_widget = new Canvos(this);
     main_widget->resize(900, 900);
     Primitive *child1 = new Primitive(main_widget);
     Primitive *child2 = new Primitive(main_widget);
-    main_widget->hide();
+    Primitive *child3 = new Primitive(main_widget);
+    Primitive *child4 = new Primitive(main_widget);
+    //main_widget->hide();
     //ui->mdiArea->hide();
     //qDebug() << ui->widget->height();
     //main_widget->show();
@@ -40,4 +42,18 @@ MainWindow::~MainWindow()
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *)
 {
     main_widget->show();
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (main_widget->hasFocus())
+    {
+        QObjectList children = main_widget->children();
+
+        for (auto child : children)
+        {
+            Primitive *p = (Primitive *)child;
+            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
+        }
+    }
 }

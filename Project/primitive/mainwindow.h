@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "primitive.h"
+#include "canvos.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,11 +19,12 @@ public:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *event);
 
 
 private:
     Ui::MainWindow *ui;
-    QWidget *main_widget;
+    Canvos *main_widget;
     Primitive *my_widget;
 };
 

@@ -1,5 +1,6 @@
 #include "primitive.h"
 #include <QDebug>
+#include <QGraphicsColorizeEffect>
 
 Primitive::Primitive(QWidget *parent) :
     QMdiSubWindow(parent), is_left_press_down(false),
@@ -7,7 +8,6 @@ Primitive::Primitive(QWidget *parent) :
 {
     this->resize(200, 200);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setStyleSheet("border:1px solid rgb(0, 255, 0);background-color:rgb(0,100,0)");
 
     qDebug() << this->parentWidget()->rect().width();
     qDebug() << this->parentWidget()->width() << this->parentWidget()->height();
@@ -16,7 +16,12 @@ Primitive::Primitive(QWidget *parent) :
     this->setMaximumHeight(500);
     this->setMaximumWidth(500);
     move(QPoint(0, 100));
-    this->resize(50, 50);
+    this->resize(100, 100);
+
+    svg_render = new QSvgRenderer(QString("D:/pump.svg"));
+    QGraphicsColorizeEffect *color_effect = new QGraphicsColorizeEffect;
+    color_effect->setColor(Qt::red);
+    this->setGraphicsEffect(color_effect);
 
     //this->setMouseTracking(true);
 }
@@ -30,6 +35,8 @@ void Primitive::mousePressEvent(QMouseEvent *event)
     switch (event->button()) {
     case Qt::LeftButton:
         this->raise();
+        this->setStyleSheet("border:1px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
+        clearBorder();
         is_left_press_down = true;
         if (direction == Inner)
         {
@@ -61,8 +68,10 @@ void Primitive::mouseMoveEvent(QMouseEvent *event)
         else
             adjustShape(mouse_position);
     }
-    else
+    else if (this->hasFocus())
         setRegionInfo(event);
+    else
+        this->setCursor(Qt::ArrowCursor);
 }
 
 void Primitive::mouseDoubleClickEvent(QMouseEvent *)
@@ -73,11 +82,16 @@ void Primitive::mouseDoubleClickEvent(QMouseEvent *)
 
 void Primitive::paintEvent(QPaintEvent *event)
 {
-    if (is_left_press_down)
-        QMdiSubWindow::paintEvent(event);
-    else
-        QMdiSubWindow::paintEvent(event);
-        //this->resize(100, 100);
+//    if (is_left_press_down)
+//        QMdiSubWindow::paintEvent(event);
+//    else
+//        QMdiSubWindow::paintEvent(event);
+//        //this->resize(100, 100);
+
+    QPainter painter(this);
+//    QBrush brush(Qt::white);
+//    painter.setBackground(brush);
+    svg_render->render(&painter);
 }
 
 void Primitive::setRegionInfo(QMouseEvent *event)
@@ -306,6 +320,20 @@ void Primitive::setBorderCheckParameter(QMouseEvent *event)
     bottom = qAbs(br.y() - event->globalPos().y());
     left = qAbs(tl.x() - event->globalPos().x());
     right = qAbs(br.x() - event->globalPos().x());
+}
+
+void Primitive::clearBorder()
+{
+    QObjectList children = this->parentWidget()->children();
+
+    for (auto child : children)
+    {
+        if (child != this)
+        {
+            Primitive *p = (Primitive *)child;
+            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
+        }
+    }
 }
 
 

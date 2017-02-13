@@ -4,19 +4,22 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = primitive
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    primitive.cpp
+    primitive.cpp \
+    canvos.cpp
 
 HEADERS  += mainwindow.h \
-    primitive.h
+    primitive.h \
+    canvos.h
 
 FORMS    += mainwindow.ui
