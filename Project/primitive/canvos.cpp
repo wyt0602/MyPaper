@@ -13,7 +13,7 @@ void Canvos::mousePressEvent(QMouseEvent *event)
     for (auto child : children)
     {
         Primitive *p = (Primitive *)child;
-        p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
+        p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,255)");
     }
 
     QWidget::mousePressEvent(event);

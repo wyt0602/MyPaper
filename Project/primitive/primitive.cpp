@@ -21,7 +21,7 @@ Primitive::Primitive(QWidget *parent) :
     svg_render = new QSvgRenderer(QString("D:/pump.svg"));
     QGraphicsColorizeEffect *color_effect = new QGraphicsColorizeEffect;
     color_effect->setColor(Qt::red);
-    this->setGraphicsEffect(color_effect);
+    //this->setGraphicsEffect(color_effect);
 
     //this->setMouseTracking(true);
 }
@@ -35,7 +35,7 @@ void Primitive::mousePressEvent(QMouseEvent *event)
     switch (event->button()) {
     case Qt::LeftButton:
         this->raise();
-        this->setStyleSheet("border:1px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
+        this->setStyleSheet("border:1px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,255)");
         clearBorder();
         is_left_press_down = true;
         if (direction == Inner)
@@ -331,7 +331,7 @@ void Primitive::clearBorder()
         if (child != this)
         {
             Primitive *p = (Primitive *)child;
-            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
+            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,255)");
         }
     }
 }
