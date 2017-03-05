@@ -1,0 +1,37 @@
+﻿[1] 尹阿峰.浅谈现代工业控制技术[J].科技资讯,2011,第8卷(第1期):102
+[2] Galloway Brendan, Hancke Gerhard P.Introduction to Industrial Control Networks[J].IEEE Communications Surveys & Tutorials,Second Quarter 2013,Vol.15(2):860-880
+[3] 王常力.分布式控制系统的现状与发展[J]. 电气时代,2004,第1期:82
+[4] 鲍金雨.工业控制自动化技术的现状与发展趋势[J].科技与企业,2016,(第12期):90
+[5] 白云飞.DCS技术及其发展展望[J].机械管理开发,2011,第26卷(第3期):202-203
+[6] Reisacher K.Supervisory control and data acquisition system[J].Springer Science & Business Media,1999,Vol.116(1):40-49
+[7] Hieb J L.Security hardened remote terminal units for SCADA networks[J].Dissertations & Theses - Gradworks,2008:271-276
+[8] Tesfahun Abebe, Bhaskari D.A SCADA testbed for investigating cyber security vulnerabilities in critical infrastructures[J].Automatic Control and Computer Sciences,2016,Vol.50(1):54-62
+[9] Turc Traian.SCADA Systems Management Based on WEB Services[J].Procedia Economics and Finance,2015,Vol.32:464-470
+[10] Combs Larry.Cloud Computing for SCADA[J].Control Engineering, Dec 2011
+[11] 万勇.一种基于云计算技术的SCADA系统设计[J].高压电器,2013,第49卷(第7期):89-91
+[12] Exforsys.The History of Data Modeling[OL].http://www.exforsys.com/tutorials/data-modeling/the-history-of-data-modeling.html:Exforsys Inc,11 January 2007
+[13] 熊伟.工控组态软件及应用[M].北京:中国电力出版社,2012,1-20
+[14] Shahzad Aamir, Lee Malrey, et al.The protocol design and New approach for SCADA security enhancement during sensors broadcasting system[J].Multimedia Tools and Applications,2016,Vol.75(22):14641-14668
+[15] Vasileios Deligiannis, Stamatis Manesis.Implementing global automata in PLCs based on the IEC 61131-3 programming norm[J].Int. J. of Industrial and Systems Engineering,2010,Vol 6 Issue 2:163-186
+[16] 吕品超, 侯立刚, 孟帅.小型组态软件图形界面系统的研究与开发[J].自动化仪表,2010,(第6期):14-16
+[17] 陈煜强, 郑耿, 刘国平, 许志艳.组态软件报警事件模块组件化设计[J].计算机应用与软件,2006, 第23卷(第1期):64-66
+[18] Rezai Abdalhossein, Keshavarzi Parviz, Moravej Zahra.Key management issue in SCADA networks: A review[J].Engineering Science and Technology, an International Journal,February 2017,Vol.20(1):354-363
+[19] 李郴, 孙继平, 王瑛.组态软件中功能模块设计[J].煤炭工程,2000,(第10期):17-19
+[20] Pan Hongxiang.The Design and Implementation of Information Integration Platform Configure Software Based on Qt[C].2011 Asia-Pacific Power and Energy Engineering Conference, March 2011, 1-4
+[21] Design patterns for object-oriented software development by[J].Communications of the ACM, Nov 1994, Vol.37(11):8
+[22] 王淑红.工控组态软件及应用[M].北京:中国电力出版社,2016,4-20
+[23] 王亚民等编著.组态软件设计与开发[M].西安:西安电子科技大学出版社,2003,6-9
+[24] 朱尚明，郎文辉，王俊.一种基于图元监视组态软件的设计与实现[J].基础自动化,2001,第8卷(第6期):30-32
+[25] 张杰，关永.工控组态软件的可视化[J].中国图象图形学报(A辑),2002,第7卷(第2期):201-204
+[26] 王光.基于C#的监控组态软件开发[D].哈尔滨：哈尔滨工业大学,2012,26-27
+[27] 纪陵.基于QT的跨平台SCADA/EMS一体化系统设计和应用[D].南京:东南大学,2013,21-23
+[28] An Jiyu, Yet Tao, Li Yongjun.Design and Achievement of Linux SCADA Based on Qt[J].Journal of Electron Devices,2006,Vol.29(2):532-535
+[29] 邹茜.基于Qt的GUI应用程序开发[J].科技信息,2010,(第18期):I0200-I0201
+[30] Brun R., Fine V..Cross-platform approach to create the interactive applications based on ROOT and Qt GUI libraries[J].Nuclear Inst. and Methods in Physics Research, A, 2004, Vol.534(1):94-97
+
+
+
+
+
+
+
