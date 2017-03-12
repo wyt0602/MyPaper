@@ -7,8 +7,25 @@
 #include <QMdiSubWindow>
 #include <QSvgRenderer>
 #include <QPainter>
+#include <QListWidgetItem>
 
-#define PADDING 6
+#define PADDING 3
+
+typedef enum{
+    BasicShape,  //一些基本的图元
+    PushButton,  //按钮形状的图元
+    Arrow,  //箭头形状的图元
+    Pipe,  //各类管状的图元
+    Blower,  //鼓风机类的图元
+    Boiler,  //锅炉类的图元
+    Pump,  //泵形状的图元
+    Controller,  //各类控制器形状的图元
+    Motor,  //电机形状的图元
+    Tank,  //各种罐子形状的图元
+    Other,  //未分类的图元
+    PrimitiveTypeSize  //图元类型的总数
+}PrimitiveType;
+
 
 class Primitive : public QMdiSubWindow
 {
@@ -38,7 +55,16 @@ protected:
 
     void paintEvent(QPaintEvent *event);
 
-private:
+public:
+    virtual PrimitiveType getType();
+    virtual QListWidgetItem* getListWidgetItem();
+    virtual QString getObjectName();
+    virtual void adjustPosition(QPoint p);
+    virtual void serialized(QDataStream &out);
+    virtual void deserialized(QDataStream &in);
+    virtual Primitive* clone(QWidget *parent);
+
+protected:
     void setRegionInfo(QMouseEvent *event);
     void adjustShape(QPoint &mouse_position);
     void borderCheck(QMouseEvent *event, QPoint &mouse_position);
@@ -55,8 +81,11 @@ private:
     RegionDirection direction;
     int top, bottom, left, right;
 
+    PrimitiveType primitive_type;
+    QString object_name;
+    QString object_other;
+
     QSvgRenderer *svg_render;
-    QRect parent_info;
     QPoint position;
     int h;
     int w;

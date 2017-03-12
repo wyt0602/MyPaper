@@ -18,9 +18,9 @@ Primitive::Primitive(QWidget *parent) :
     move(QPoint(0, 100));
     this->resize(100, 100);
 
-    svg_render = new QSvgRenderer(QString("D:/pump.svg"));
-    QGraphicsColorizeEffect *color_effect = new QGraphicsColorizeEffect;
-    color_effect->setColor(Qt::red);
+    //svg_render = new QSvgRenderer(QString("D:/pump.svg"));
+    //QGraphicsColorizeEffect *color_effect = new QGraphicsColorizeEffect;
+    //color_effect->setColor(Qt::red);
     //this->setGraphicsEffect(color_effect);
 
     //this->setMouseTracking(true);
@@ -35,7 +35,7 @@ void Primitive::mousePressEvent(QMouseEvent *event)
     switch (event->button()) {
     case Qt::LeftButton:
         this->raise();
-        this->setStyleSheet("border:1px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,255)");
+        this->setStyleSheet("border:1px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,0)");
         clearBorder();
         is_left_press_down = true;
         if (direction == Inner)
@@ -79,19 +79,134 @@ void Primitive::mouseDoubleClickEvent(QMouseEvent *)
     this->resize(100, 100);
     //this->close();
 }
+void Primitive::adjustPosition(QPoint p)
+{
 
+}
+QString Primitive::getObjectName()
+{
+    return object_name;
+}
 void Primitive::paintEvent(QPaintEvent *event)
 {
-//    if (is_left_press_down)
-//        QMdiSubWindow::paintEvent(event);
-//    else
-//        QMdiSubWindow::paintEvent(event);
-//        //this->resize(100, 100);
+    Primitive *w = this;
+    QPainter painter(w);
+    QFontMetrics metrics = painter.fontMetrics();
+    int textHeight = metrics.ascent() + metrics.descent();
 
-    QPainter painter(this);
-//    QBrush brush(Qt::white);
-//    painter.setBackground(brush);
-    svg_render->render(&painter);
+    int leftWidth = metrics.width(tr("9000")) + 5;
+    int rightWidth = metrics.width(tr("(日)"));
+    int width = w->size().width() - leftWidth - rightWidth;
+    int height = w->size().height() - 3 * textHeight;
+
+    // 绘制外框
+    painter.drawRect(0, 0, w->size().width() -1, w->size().height() - 1);
+
+    //　移动坐标系
+    painter.translate(leftWidth, 1.75 * textHeight + height);
+    int totalCount = 9000; // 默认每年收入9000件衣服
+    int count = 10;        // 分成10成
+    float deltaX = width / 12.0f;         // x坐标上每分的宽度
+    float deltaY = (float)height / count; // y坐标上每分的宽度
+
+    // 画横坐标
+
+    painter.drawLine(0, 0, width, 0);
+
+    for (int i = 1; i <= 12; ++i) {
+        QString month = tr("%1月").arg(i);
+        int stringWidth = metrics.width(month);
+        // 绘制坐标刻度
+        painter.drawLine(deltaX * i, 0, deltaX * i, 4);
+       // 绘制坐标处的月
+        int monthX = deltaX * (i - 1) + ((deltaX - stringWidth) / 2);
+        painter.drawText(monthX, textHeight, month);
+    }
+   // 画纵坐标
+
+    painter.drawLine(0, 0, 0, -height);
+    painter.drawText(-metrics.width(tr("(件)")),
+
+                     -(deltaY * count + textHeight / 2 + metrics.descent()),
+
+                     tr("(件)"));
+    for (int i = 1; i <= count; ++i) {
+
+        QString value = QString("%1").arg(i * totalCount / count);
+
+        int stringWidth = metrics.width(value);
+        // 绘制坐标刻度
+        painter.drawLine(-4, -i * deltaY, 0, -i * deltaY);
+        // 绘制坐标值
+
+        //painter.drawText(-stringWidth - 4, -i * deltaY + stringHeight / 2, value);
+
+        painter.drawText(-stringWidth - 4, -(deltaY * i + textHeight / 2 - metrics.ascent()), value);
+
+    }
+    // 绘制每个月收到的服饰
+
+    painter.setBrush(Qt::BDiagPattern);
+
+    QList<int> yearList = {233, 234, 342, 378,453, 567,654,876};
+    for (int i = 0; i < yearList.size(); ++i) {
+
+        painter.setPen(Qt::black);
+
+        int fineryCount = yearList.at(i); // 第i + 1个月收到的服饰件数
+
+        int h = fineryCount / (float)totalCount * height;
+
+        painter.drawRect(deltaX * i + 2, 0, deltaX - 4, -h);
+
+
+
+        // 绘制收到的服饰件数
+
+        QString fineryString = QString("%1").arg(fineryCount);
+
+        int stringWidth = metrics.width(fineryString);
+
+
+
+        if (h > height) {
+
+            h = height;
+
+        }
+
+
+
+        painter.setPen(Qt::red);
+
+        //painter.drawText(deltaX * i + (deltaX - stringWidth) / 2, -(h + metrics.descent()), fineryString);
+
+    }
+}
+
+PrimitiveType Primitive::getType()
+{
+    return primitive_type;
+}
+
+QListWidgetItem *Primitive::getListWidgetItem()
+{
+
+}
+
+void Primitive::serialized(QDataStream &out)
+{
+
+}
+
+void Primitive::deserialized(QDataStream &in)
+{
+
+}
+
+Primitive *Primitive::clone(QWidget *parent)
+{
+    qDebug() << "in parent";
 }
 
 void Primitive::setRegionInfo(QMouseEvent *event)
@@ -331,7 +446,7 @@ void Primitive::clearBorder()
         if (child != this)
         {
             Primitive *p = (Primitive *)child;
-            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,255)");
+            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(255,255,255,0)");
         }
     }
 }

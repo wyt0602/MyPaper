@@ -16,10 +16,12 @@ CONFIG += c++11
 SOURCES += main.cpp\
         mainwindow.cpp \
     primitive.cpp \
-    canvos.cpp
+    canvos.cpp \
+    projectlistwidget.cpp
 
 HEADERS  += mainwindow.h \
     primitive.h \
-    canvos.h
+    canvos.h \
+    projectlistwidget.h
 
 FORMS    += mainwindow.ui

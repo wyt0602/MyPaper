@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QtWidgets>
+#include <QMimeData>
 
 #include "projectlistwidget.h"
 
