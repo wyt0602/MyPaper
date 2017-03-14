@@ -15,8 +15,8 @@ Primitive::Primitive(QWidget *parent) :
     this->setMinimumWidth(50);
     this->setMaximumHeight(500);
     this->setMaximumWidth(500);
-    move(QPoint(0, 100));
-    this->resize(100, 100);
+    //move(QPoint(0, 100));
+    this->resize(300, 300);
 
     //svg_render = new QSvgRenderer(QString("D:/pump.svg"));
     //QGraphicsColorizeEffect *color_effect = new QGraphicsColorizeEffect;
@@ -89,75 +89,90 @@ QString Primitive::getObjectName()
 }
 void Primitive::paintEvent(QPaintEvent *event)
 {
-    Primitive *w = this;
-    QPainter painter(w);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
     QFontMetrics metrics = painter.fontMetrics();
-    int textHeight = metrics.ascent() + metrics.descent();
+    int text_height = metrics.ascent() + metrics.descent();
 
-    int leftWidth = metrics.width(tr("9000")) + 5;
-    int rightWidth = metrics.width(tr("(日)"));
-    int width = w->size().width() - leftWidth - rightWidth;
-    int height = w->size().height() - 3 * textHeight;
-
-    // 绘制外框
-    painter.drawRect(0, 0, w->size().width() -1, w->size().height() - 1);
+    int left_width = metrics.width(tr("   ")) + 5;
+    int right_width = metrics.width(tr("  "));
+    int width = this->size().width() - left_width - right_width;
+    int height = this->size().height() - 3 * text_height;
 
     //　移动坐标系
-    painter.translate(leftWidth, 1.75 * textHeight + height);
-    int totalCount = 9000; // 默认每年收入9000件衣服
+    painter.translate(left_width, 1.75 * text_height + height);
+    int totalCount = 100; // 默认每年收入9000件衣服
     int count = 10;        // 分成10成
-    float deltaX = width / 12.0f;         // x坐标上每分的宽度
+    float deltaX = width / 9.0f;         // x坐标上每分的宽度
     float deltaY = (float)height / count; // y坐标上每分的宽度
 
     // 画横坐标
 
     painter.drawLine(0, 0, width, 0);
 
-    for (int i = 1; i <= 12; ++i) {
-        QString month = tr("%1月").arg(i);
+    for (int i =0; i <= 9; ++i) {
+        QString month = tr("%1").arg(i+1);
         int stringWidth = metrics.width(month);
         // 绘制坐标刻度
         painter.drawLine(deltaX * i, 0, deltaX * i, 4);
        // 绘制坐标处的月
-        int monthX = deltaX * (i - 1) + ((deltaX - stringWidth) / 2);
-        painter.drawText(monthX, textHeight, month);
+        int monthX = deltaX * (i) - stringWidth / 2;
+        //int monthX = deltaX * (i - 1) + ((deltaX - stringWidth) / 2);
+        painter.drawText(monthX, text_height, month);
     }
    // 画纵坐标
 
     painter.drawLine(0, 0, 0, -height);
-    painter.drawText(-metrics.width(tr("(件)")),
+    painter.drawText(-metrics.width(tr("(℃)")),-(deltaY * count + text_height / 2 + metrics.descent()),tr("(℃)"));
+    for (int i = 0; i <= count; ++i) {
 
-                     -(deltaY * count + textHeight / 2 + metrics.descent()),
 
-                     tr("(件)"));
-    for (int i = 1; i <= count; ++i) {
-
-        QString value = QString("%1").arg(i * totalCount / count);
-
-        int stringWidth = metrics.width(value);
         // 绘制坐标刻度
         painter.drawLine(-4, -i * deltaY, 0, -i * deltaY);
         // 绘制坐标值
 
         //painter.drawText(-stringWidth - 4, -i * deltaY + stringHeight / 2, value);
 
-        painter.drawText(-stringWidth - 4, -(deltaY * i + textHeight / 2 - metrics.ascent()), value);
+        QString value = QString("%1").arg(i * totalCount / count);
 
+
+        int stringWidth = metrics.width(value);
+        painter.drawText(-stringWidth - 4, -(deltaY * i + text_height / 2 - metrics.ascent()), value);
     }
     // 绘制每个月收到的服饰
 
-    painter.setBrush(Qt::BDiagPattern);
+    //painter.setBrush(Qt::BDiagPattern);
 
-    QList<int> yearList = {233, 234, 342, 378,453, 567,654,876};
-    for (int i = 0; i < yearList.size(); ++i) {
+    QPoint last_point;
+    QPoint current_point;
 
-        painter.setPen(Qt::black);
+    QList<float> yearList = {81.2,
+                             83.0,
+                             85.2,
+                             80.1,
+                             86.1,
+                             66.1,
+                             80.0,
+                             87.1,
+                             88.3,
+                             82.6
+};
+    last_point = QPoint(0, -yearList.at(0)/(float)totalCount * height);
+    for (int i = 1; i < yearList.size(); ++i) {
+
+        painter.setPen(Qt::red);
 
         int fineryCount = yearList.at(i); // 第i + 1个月收到的服饰件数
 
         int h = fineryCount / (float)totalCount * height;
+        current_point = QPoint(deltaX * i, -h);
+        painter.setBrush(Qt::red);
+        painter.drawRect(last_point.x()-2, last_point.y()-2, 4, 4);
+        painter.setPen(Qt::black);
+        painter.drawLine(last_point, current_point);
+        last_point = current_point;
 
-        painter.drawRect(deltaX * i + 2, 0, deltaX - 4, -h);
+        //painter.drawRect(deltaX * i + 2, 0, deltaX - 4, -h);
 
 
 
@@ -177,11 +192,14 @@ void Primitive::paintEvent(QPaintEvent *event)
 
 
 
-        painter.setPen(Qt::red);
+        //painter.setPen(Qt::red);
 
         //painter.drawText(deltaX * i + (deltaX - stringWidth) / 2, -(h + metrics.descent()), fineryString);
 
     }
+    painter.setPen(Qt::red);
+    painter.setBrush(Qt::red);
+    painter.drawRect(last_point.x()-2, last_point.y()-2, 4, 4);
 }
 
 PrimitiveType Primitive::getType()
@@ -207,6 +225,21 @@ void Primitive::deserialized(QDataStream &in)
 Primitive *Primitive::clone(QWidget *parent)
 {
     qDebug() << "in parent";
+}
+
+void Primitive::setParameter(int x_range, int x_count, int y_range, int y_count)
+{
+
+}
+
+void Primitive::setTitle(QString &title)
+{
+
+}
+
+void Primitive::setData(QList<float> &data)
+{
+
 }
 
 void Primitive::setRegionInfo(QMouseEvent *event)

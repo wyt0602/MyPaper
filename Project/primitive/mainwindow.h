@@ -18,16 +18,21 @@ public:
     ~MainWindow();
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
 
 
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     Canvos *main_widget;
     Primitive *my_widget;
+    Canvos *canvos;
+    QString filename;
 };
 
 #endif // MAINWINDOW_H

@@ -7,8 +7,6 @@
 ProjectListWidget::ProjectListWidget(QWidget *parent)
     : QListWidget(parent)
 {
-//    setDragEnabled(true);
-//    setDragDropMode(QAbstractItemView::DragOnly);
     setAcceptDrops(true);
 }
 
@@ -31,7 +29,6 @@ void ProjectListWidget::mouseMoveEvent(QMouseEvent *event)
 
 void ProjectListWidget::performDrag()
 {
-    qDebug() << "in performDrag";
     QListWidgetItem *item = currentItem();
     if (item) {
         QMimeData *mimeData = new QMimeData;

@@ -64,6 +64,10 @@ public:
     virtual void deserialized(QDataStream &in);
     virtual Primitive* clone(QWidget *parent);
 
+    virtual void setParameter(int x_range, int x_count, int y_range, int y_count);
+    virtual void setTitle(QString &title);
+    virtual void setData(QList<float> &data);
+
 protected:
     void setRegionInfo(QMouseEvent *event);
     void adjustShape(QPoint &mouse_position);

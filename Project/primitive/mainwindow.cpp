@@ -13,18 +13,22 @@
 
 typedef Primitive* (*func) (QWidget*);
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent), filename("D:/data.dat"),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     this->resize(1200, 1200);
-    ProjectListWidget *list = ui->listWidget;
-    Canvos *canvos = ui->canvos_widget;
+    //ProjectListWidget *list = new ProjectListWidget(ui->listWidget);
+    canvos = new Canvos(ui->canvos_widget);
     canvos->resize(1000, 1000);
-    Primitive *test = new Primitive(canvos);
+
+    //Primitive *test = new Primitive(canvos);
     canvos->loadPrimitive();
-    QMap<int, Primitive*> &primitive_set = canvos->getPrimitiveSet();
-    list->setIconSize(QSize(50,50));
+    //QMap<int, Primitive*> &primitive_set = canvos->getPrimitiveSet();
+    ProjectListWidget *list = canvos->getListWidget();
+    list->setParent(ui->listWidget);
+    list->resize(250, 770);
+    //list->setIconSize(QSize(50,50));
     //setCentralWidget(ui->mdiArea);
     //qDebug() << mapToGlobal(ui->mdiArea->pos());
 //    QMdiSubWindow *child1 = new Primitive(ui->mdiArea);
@@ -58,15 +62,16 @@ MainWindow::MainWindow(QWidget *parent) :
 //    primitives.push_back((func)lib.resolve("getElevatedTankPrimitive"));
 //    primitives.push_back((func)lib.resolve("getPalmTreePrimitive"));
 
-    QMapIterator<int, Primitive*> it(primitive_set);
-    while (it.hasNext())
-    {
-        it.next();
-        QListWidgetItem *item = it.value()->getListWidgetItem();
-        item->setWhatsThis(QString("%1").arg(it.key()));
-        item->setSizeHint(QSize(70, 70));
-        list->addItem(item);
-    }
+//    QMapIterator<int, Primitive*> it(primitive_set);
+//    while (it.hasNext())
+//    {
+//        it.next();
+//        QListWidgetItem *item = it.value()->getListWidgetItem();
+//        item->setWhatsThis(QString("%1").arg(it.key()));
+//        item->setSizeHint(QSize(70, 70));
+//        list->addItem(item);
+//    }
+
 //    for(auto f : primitives)
 //    {
 //        Primitive *child = f(main_widget);
@@ -128,25 +133,21 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::mousePressEvent(QMouseEvent *event)
+void MainWindow::on_pushButton_clicked()
 {
-    if (main_widget->hasFocus())
+    QList<Primitive*> &cur_pri = canvos->getCurrentPrimitive();
+    for (Primitive* item : cur_pri)
     {
-        QObjectList children = main_widget->children();
-
-        for (auto child : children)
-        {
-            Primitive *p = (Primitive *)child;
-            p->setStyleSheet("border:0px dotted rgb(0, 0, 0);background-color:rgba(0,0,0,0)");
-        }
+        qDebug() << item->getObjectName();
     }
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_2_clicked()
 {
-    qDebug() << "double";
-    ui->canvos_widget->loadPrimitive();
-    QMap<int, Primitive*> &primitive_set = ui->canvos_widget->getPrimitiveSet();
-    for(auto item : primitive_set)
-        item->show();
+    canvos->savePrimitiveToFile(filename);
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    canvos->loadPrimitiveFromFile(filename);
 }
