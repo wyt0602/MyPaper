@@ -1,0 +1,12 @@
+getTankPrimitive
+getFirePrimitive
+getBuildingPrimitive
+getLineChartPrimitive
+getElevatedTankPrimitive
+getPalmTreePrimitive
+getHorizontalPipePrimitive
+getTeePrimitive
+getVerticalPrimitive
+getCurvePrimitive
+getTextPrimitive
+

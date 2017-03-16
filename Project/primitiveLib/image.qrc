@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/svg">
+        <file>images/svg/tank.svg</file>
+        <file>images/svg/fire.svg</file>
+        <file>images/svg/horizontaPipe.svg</file>
+        <file>images/svg/tee.svg</file>
+        <file>images/svg/verticalPipe.svg</file>
+        <file>images/svg/building.svg</file>
+        <file>images/svg/curve.svg</file>
+        <file>images/svg/elevatedTank.svg</file>
+        <file>images/svg/palmTree.svg</file>
+    </qresource>
+    <qresource prefix="/png">
+        <file>images/png/tank.png</file>
+        <file>images/png/fire.png</file>
+        <file>images/png/horizontaPipe.png</file>
+        <file>images/png/tee.png</file>
+        <file>images/png/verticalPipe.png</file>
+        <file>images/png/building.png</file>
+        <file>images/png/curve.png</file>
+        <file>images/png/palmTree.png</file>
+        <file>images/png/elevatedTank.png</file>
+        <file>images/png/text.png</file>
+        <file>images/png/lineChart.png</file>
+    </qresource>
+</RCC>
